@@ -144,6 +144,7 @@ class QuizActivity : AppCompatActivity() {
         option4RB.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("options").child("4").getValue())
 
 
+
         // Check if an option is selected for the current question
         val selectedOption = Variables.selectedOptionsMap[currentQuestionIndex]
 
