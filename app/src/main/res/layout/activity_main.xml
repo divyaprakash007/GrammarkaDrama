@@ -19,7 +19,6 @@
             android:text="Please select one category from the list." />
 
 
-
         <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
