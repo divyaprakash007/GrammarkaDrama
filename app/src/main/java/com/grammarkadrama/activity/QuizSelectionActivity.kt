@@ -22,6 +22,7 @@ class QuizSelectionActivity : AppCompatActivity() {
         // Retrieve the selected category from the intent
         val selectedItem = intent.getStringExtra("selectedItem")
 
+
         // Get a reference to the Firebase Realtime Database
         val databaseRef = FirebaseDatabase.getInstance().reference
 
