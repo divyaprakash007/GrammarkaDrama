@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.grammarkadrama" />
+                  <option name="mobileSdkAppId" value="1:390207779525:android:0d44150a4f73fe74d936ac" />
+                  <option name="projectId" value="english-d2842" />
+                  <option name="projectNumber" value="390207779525" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

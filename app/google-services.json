@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "390207779525",
+    "firebase_url": "https://english-d2842-default-rtdb.firebaseio.com",
+    "project_id": "english-d2842",
+    "storage_bucket": "english-d2842.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390207779525:android:0d44150a4f73fe74d936ac",
+        "android_client_info": {
+          "package_name": "com.grammarkadrama"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGPNiLvFySQor7wXpQ7rDUsOEbXrOW3A8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
