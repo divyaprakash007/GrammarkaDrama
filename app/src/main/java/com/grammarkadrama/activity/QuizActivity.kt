@@ -143,24 +143,20 @@ class QuizActivity : AppCompatActivity() {
         option3RB.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("options").child("3").getValue())
         option4RB.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("options").child("4").getValue())
 
-
+        optionsRG.clearCheck()
 
         // Check if an option is selected for the current question
         val selectedOption = Variables.selectedOptionsMap[currentQuestionIndex]
 
         // Iterate over the radio buttons in the RadioGroup
-        for (i in 0 until optionsRG.childCount) {
+        for (i in 0 until optionsRG.childCount) { // Start from index 0
             val radioButton = optionsRG.getChildAt(i) as? RadioButton
             if (radioButton != null) {
                 // Check if the option is selected
-                if (i + 1 == selectedOption) { // Adding 1 because options are 1-indexed
-                    radioButton.isChecked = true // Set the radio button as selected
-                } else {
-                    radioButton.isChecked = false // Unselect the radio button
-                }
+                radioButton.isChecked = i + 1 == selectedOption // Adjust for 1-indexing
             }
         }
-
+        optionsRG.setOnCheckedChangeListener(null) // Clear any previous listeners
         optionsRG.setOnCheckedChangeListener { group, checkedId ->
             // Get the checked RadioButton's ID
             val checkedRadioButtonId = group.checkedRadioButtonId

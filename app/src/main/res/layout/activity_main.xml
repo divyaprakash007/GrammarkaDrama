@@ -2,23 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewMessage"
+
+        <TextView
+            android:id="@+id/textViewMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Please select one category from the list." />
+
+
+
+        <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginBottom="8dp"
-        android:text="Please select at least one item from the list"
-        />
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        android:elevation="2dp"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#FFFFFF"> <!-- Adjust margin as needed -->
 
-    <ListView
-        android:id="@+id/listViewItems"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <ListView
+                android:id="@+id/listViewItems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@android:color/transparent"
+                android:layout_margin="4dp"/>
 
-
+        </androidx.cardview.widget.CardView>
 
 </LinearLayout>
