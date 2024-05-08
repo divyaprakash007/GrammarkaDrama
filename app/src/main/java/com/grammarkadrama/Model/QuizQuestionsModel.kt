@@ -2,7 +2,6 @@ package com.grammarkadrama.Model
 import android.os.Parcelable
 
 class QuizQuestionsModel {
-    class QuizQuestion {
         private var questionText: String = ""
         private var options: Map<String, String> = mapOf()
         private var correctOption: Int = 1
@@ -49,5 +48,3 @@ class QuizQuestionsModel {
             this.hint = hint
         }
     }
-
-}
