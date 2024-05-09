@@ -124,6 +124,25 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/answerTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/explanationTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Explanation"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:padding="16dp"/>
+
     </LinearLayout>
 
 </ScrollView>

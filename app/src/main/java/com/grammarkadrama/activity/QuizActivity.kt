@@ -25,6 +25,8 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var databaseRef: DatabaseReference
     private lateinit var questionNumberTV: TextView
     private lateinit var questionTV: TextView
+    private lateinit var answerTV: TextView
+    private lateinit var explanationTV: TextView
     private lateinit var optionsRG: RadioGroup
     private lateinit var option1RB: RadioButton
     private lateinit var option2RB: RadioButton
@@ -45,6 +47,8 @@ class QuizActivity : AppCompatActivity() {
         // Initialize views
         questionNumberTV = findViewById(R.id.questionNumberTV)
         questionTV = findViewById(R.id.questionTV)
+        explanationTV = findViewById(R.id.explanationTV)
+        answerTV = findViewById(R.id.answerTV)
         optionsRG = findViewById(R.id.optionsRG)
         option1RB = findViewById(R.id.option1RB)
         option2RB = findViewById(R.id.option2RB)
@@ -94,7 +98,8 @@ class QuizActivity : AppCompatActivity() {
                             "D" to "" + dataSnapshot.child("" + i).child("options").child("4").value,
                         )
                         questionModel.setOptions(options)
-                        questionModel.setCorrectOption(1)
+                        questionModel.setCorrectOption(dataSnapshot.child("" + i).child("correct_option").getValue(Int::class.java) ?: 0)
+
                         questionModel.setHint(
                             "" + dataSnapshot.child("" + i).child("hint").value
                         )
@@ -187,6 +192,9 @@ class QuizActivity : AppCompatActivity() {
     private fun updateView(currentQuestionIndex: Int) {
         val optionsMap = Variables.questionsList[currentQuestionIndex].getOptions("A") // Get the options map for the current question
 
+        explanationTV.setText("")
+        answerTV.setText("")
+
         questionNumberTV.text = "Question Number ${currentQuestionIndex + 1} / ${Variables.questionsList.size}"
         questionTV.text = Variables.questionsList[currentQuestionIndex].getQuestionText()
 
@@ -217,6 +225,9 @@ class QuizActivity : AppCompatActivity() {
                 R.id.option3RB -> Variables.questionsList[currentQuestionIndex].setUserOption(3)
                 R.id.option4RB -> Variables.questionsList[currentQuestionIndex].setUserOption(4)
             }
+
+            explanationTV.setText("Explanation: \n${Variables.questionsList[currentQuestionIndex].getExplanation()}")
+            answerTV.setText("Right Option: ${Variables.questionsList[currentQuestionIndex].getCorrectOption()}")
         }
     }
 
