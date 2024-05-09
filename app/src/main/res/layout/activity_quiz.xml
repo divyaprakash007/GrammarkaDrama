@@ -4,92 +4,124 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#A8FFFFFF"
     tools:context=".activity.QuizActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
         android:orientation="vertical">
-
 
         <TextView
             android:id="@+id/questionNumberTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp" />
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/questionTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp" />
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
         <RadioGroup
             android:id="@+id/optionsRG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
             android:orientation="vertical">
 
             <RadioButton
                 android:id="@+id/option1RB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp" />
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"/>
 
             <RadioButton
                 android:id="@+id/option2RB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp" />
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"/>
 
             <RadioButton
                 android:id="@+id/option3RB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp" />
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"/>
 
             <RadioButton
                 android:id="@+id/option4RB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp" />
-
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"/>
         </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="2dp">
+            android:layout_marginTop="16dp"
+            android:padding="4dp"
+            android:gravity="center_horizontal">
 
             <Button
                 android:id="@+id/previousButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:enabled="false"
-                android:text="Previous" />
+                android:layout_marginEnd="8dp"
+                android:text="Previous"
+                android:textColor="@color/white"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
 
             <Button
                 android:id="@+id/hintButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Hint" />
+                android:layout_marginEnd="8dp"
+                android:text="Hint"
+                android:textColor="@color/white"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp" />
 
             <Button
                 android:id="@+id/nextButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Next" />
-
+                android:text="Next"
+                android:textColor="@color/white"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp" />
         </LinearLayout>
     </LinearLayout>
 

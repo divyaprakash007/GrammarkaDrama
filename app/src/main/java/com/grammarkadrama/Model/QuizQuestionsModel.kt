@@ -4,7 +4,7 @@ import android.os.Parcelable
 class QuizQuestionsModel {
         private var questionText: String = ""
         private var options: Map<String, String> = mapOf()
-        private var correctOption: Int = 1
+        private var correctOption: Int = -1
         private var explanation: String = ""
         private var hint: String = ""
 
@@ -29,6 +29,14 @@ class QuizQuestionsModel {
         }
 
         fun setCorrectOption(correctOption: Int) {
+            this.correctOption = correctOption
+        }
+
+        fun getUserOption(): Int {
+            return correctOption
+        }
+
+        fun setUserOption(correctOption: Int) {
             this.correctOption = correctOption
         }
 

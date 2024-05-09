@@ -6,12 +6,14 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.grammarkadrama.R
 import com.google.firebase.database.*
 
 class QuizSelectionActivity : AppCompatActivity() {
     private lateinit var listViewQuizzes: ListView
+    private var progressDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,15 +84,21 @@ class QuizSelectionActivity : AppCompatActivity() {
     }
 
     private fun showProgressBar() {
-        // Find the ProgressBar view by its ID
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val dialogView = layoutInflater.inflate(R.layout.custom_progress_dialog, null)
+        progressDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
 
-        // Set the ProgressBar visibility to visible
-        progressBar.visibility = View.VISIBLE
+        progressDialog?.show()
     }
 
     private fun hideProgressBar() {
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        progressBar.visibility = View.GONE
+        // Dismiss the dialog if it's currently showing
+        progressDialog?.let { dialog ->
+            if (dialog.isShowing) {
+                dialog.dismiss()
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.grammarkadrama.DataHandler.Variables
+import com.grammarkadrama.Model.QuizQuestionsModel
 import com.grammarkadrama.R
 
 class QuizActivity : AppCompatActivity() {
@@ -34,6 +35,9 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var hintButton: Button
     private lateinit var nextButton: Button
 
+    // Declare a global variable for the dialog
+    private var progressDialog: AlertDialog? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +56,6 @@ class QuizActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.nextButton)
 
 
-
         // Retrieve selected category and quiz ID from intent
         selectedCategory = intent.getStringExtra("selectedItem") ?: ""
         quizId = intent.getStringExtra("quizId") ?: ""
@@ -66,87 +69,144 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun fetchDataFromFirebase() {
+        showProgressDialog()
         // Construct Firebase Database reference path for the selected category and quiz ID
         val dataRef = databaseRef.child(selectedCategory).child(quizId).child("questions")
 
         // Attach ValueEventListener to retrieve data
         dataRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
+                hideProgressDialog()
                 if (dataSnapshot.exists()) {
-                   Variables.mainDataSnapshot = dataSnapshot
 
-                    setQuizView(dataSnapshot)
+                    for (i in 0 until dataSnapshot.childrenCount) {
+                        Log.d("TAG","onDataChange: ${dataSnapshot.child("" + i).child("question_text").value}"
+                        )
+
+                        val questionModel = QuizQuestionsModel()
+                        questionModel.setQuestionText(
+                            "" + dataSnapshot.child("" + i).child("question_text").value
+                        )
+
+                        val options = mapOf(
+                            "A" to "" + dataSnapshot.child("" + i).child("options").child("1").value,
+                            "B" to "" + dataSnapshot.child("" + i).child("options").child("2").value,
+                            "C" to "" + dataSnapshot.child("" + i).child("options").child("3").value,
+                            "D" to "" + dataSnapshot.child("" + i).child("options").child("4").value,
+                        )
+                        questionModel.setOptions(options)
+                        questionModel.setCorrectOption(1)
+                        questionModel.setHint(
+                            "" + dataSnapshot.child("" + i).child("hint").value
+                        )
+                        questionModel.setExplanation(
+                            "" + dataSnapshot.child("" + i).child("explanation").value
+                        )
+
+                        Variables.questionsList.add(questionModel)
+                    }
+
+
+
+                    setQuizView()
 //                for (i in 0 until dataSnapshot.childrenCount) {
 ////                    Log.d("TAG", "onDataChange: ${dataSnapshot.child(""+i).child("question_text").getValue<String>()}")
 //
 //                }
-                //                Log.d("TAG", "onDataChange: ${dataSnapshot.child("0").child("question_text").getValue<String>()}")
-            } else {
+                    //                Log.d("TAG", "onDataChange: ${dataSnapshot.child("0").child("question_text").getValue<String>()}")
+                } else {
                     Log.d("FirebaseData", "No data found for the selected category and quiz ID.")
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                hideProgressDialog()
                 Log.e("FirebaseData", "Database error occurred: ${databaseError.message}")
             }
         })
     }
 
-    private fun setQuizView(dataSnapshot: DataSnapshot) {
+    private fun setQuizView() {
         var currentQuestionIndex = 0
 
-        updateView(currentQuestionIndex,dataSnapshot)
-        previousButton.setOnClickListener{
+        updateView(currentQuestionIndex)
+        previousButton.setOnClickListener {
             currentQuestionIndex -= 1
-            nextButton.setText("Next")
+            nextButton.text = "Next"
 
-            if (currentQuestionIndex == 0){
-                previousButton.isEnabled = false
-            } else {
-                previousButton.isEnabled = true
-            }
-            updateView(currentQuestionIndex,dataSnapshot)
+            previousButton.isEnabled = currentQuestionIndex != 0
+            updateView(currentQuestionIndex)
         }
 
-        nextButton.setOnClickListener{
-            if (nextButton.text.equals("Submit")){
+        nextButton.setOnClickListener {
+            if (nextButton.text.equals("Submit")) {
                 val intent = Intent(this, ResultActivity::class.java)
                 startActivity(intent)
             } else {
                 currentQuestionIndex += 1
                 previousButton.isEnabled = true
-                if (currentQuestionIndex == 9){
-                    nextButton.setText("Submit")
+                if (currentQuestionIndex == 9) {
+                    nextButton.text = "Submit"
                 }
-                updateView(currentQuestionIndex, dataSnapshot)
+                updateView(currentQuestionIndex)
             }
         }
 
-        hintButton.setOnClickListener{
+        hintButton.setOnClickListener {
 
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setTitle("Hint")
-            alertDialogBuilder.setMessage(""+dataSnapshot.child(currentQuestionIndex.toString()).child("hint").getValue())
+            alertDialogBuilder.setMessage(""+ Variables.questionsList[currentQuestionIndex].getHint())
             alertDialogBuilder.setPositiveButton("Okay", null)
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
         }
     }
 
-    private fun updateView(currentQuestionIndex: Int, dataSnapshot: DataSnapshot) {
-        questionNumberTV.setText("Question Number ${currentQuestionIndex+1} / ${dataSnapshot.childrenCount}")
-        questionTV.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("question_text").getValue())
+    // Function to show custom progress dialog
+    private fun showProgressDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.custom_progress_dialog, null)
+        progressDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
 
-        option1RB.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("options").child("1").getValue())
-        option2RB.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("options").child("2").getValue())
-        option3RB.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("options").child("3").getValue())
-        option4RB.setText(""+ dataSnapshot.child(""+currentQuestionIndex).child("options").child("4").getValue())
+        progressDialog?.show()
+    }
+
+    // Function to hide custom progress dialog
+    private fun hideProgressDialog() {
+        // Dismiss the dialog if it's currently showing
+        progressDialog?.let { dialog ->
+            if (dialog.isShowing) {
+                dialog.dismiss()
+            }
+        }
+    }
+
+
+    private fun updateView(currentQuestionIndex: Int) {
+        val optionsMap = Variables.questionsList.get(currentQuestionIndex).getOptions("A") // Get the options map for option "A"
+
+        Log.d("TAG", "Option Value: ${optionsMap.get("B")}")
+        questionNumberTV.text =
+            "Question Number ${currentQuestionIndex + 1} / ${Variables.questionsList.size}"
+        questionTV.text =
+           Variables.questionsList[currentQuestionIndex].getQuestionText()
+
+        option1RB.text =
+            optionsMap.get("A")
+        option2RB.text =
+            optionsMap.get("B")
+        option3RB.text =
+            optionsMap.get("C")
+        option4RB.text =
+            optionsMap.get("D")
 
         optionsRG.clearCheck()
 
         // Check if an option is selected for the current question
-        val selectedOption = Variables.selectedOptionsMap[currentQuestionIndex]
+        val selectedOption = Variables.questionsList[currentQuestionIndex].getUserOption()
 
         // Iterate over the radio buttons in the RadioGroup
         for (i in 0 until optionsRG.childCount) { // Start from index 0
@@ -164,18 +224,26 @@ class QuizActivity : AppCompatActivity() {
             // Handle the selection of RadioButton
             when (checkedRadioButtonId) {
                 R.id.option1RB -> {
-                   Variables.selectedOptionsMap[currentQuestionIndex] = 1
+                    Variables.questionsList[currentQuestionIndex].setUserOption(1)
                 }
+
                 R.id.option2RB -> {
-                    Variables.selectedOptionsMap[currentQuestionIndex] = 2
+                    Variables.questionsList[currentQuestionIndex].setUserOption(2)
                 }
+
                 R.id.option3RB -> {
-                    Variables.selectedOptionsMap[currentQuestionIndex] = 3
+                    Variables.questionsList[currentQuestionIndex].setUserOption(3)
                 }
+
                 R.id.option4RB -> {
-                    Variables.selectedOptionsMap[currentQuestionIndex] = 4
+                    Variables.questionsList[currentQuestionIndex].setUserOption(4)
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Variables.questionsList.clear()
     }
 }

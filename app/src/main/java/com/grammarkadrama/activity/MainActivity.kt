@@ -75,9 +75,23 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the app update manager
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+        val aboutUsTV: TextView = findViewById(R.id.aboutUsTV)
+        val policyTV: TextView = findViewById(R.id.policyTV)
 
         // Check for app update availability
         checkForAppUpdate()
+
+        aboutUsTV.setOnClickListener {
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("buttonClicked", "aboutUsTV")
+            startActivity(intent)
+        }
+
+        policyTV.setOnClickListener {
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("buttonClicked", "policyTV")
+            startActivity(intent)
+        }
 
         listViewItems = findViewById(R.id.listViewItems)
         textViewMessage = findViewById(R.id.textViewMessage)
@@ -167,6 +181,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_CODE_APP_UPDATE = 1000
     }
+
+
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
