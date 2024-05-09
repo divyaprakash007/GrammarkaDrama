@@ -23,7 +23,6 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var selectedCategory: String
     private lateinit var quizId: String
     private lateinit var databaseRef: DatabaseReference
-
     private lateinit var questionNumberTV: TextView
     private lateinit var questionTV: TextView
     private lateinit var optionsRG: RadioGroup
