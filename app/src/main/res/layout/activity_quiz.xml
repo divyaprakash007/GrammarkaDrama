@@ -102,6 +102,7 @@
                 android:text="Previous"
                 android:textColor="@color/white"
                 android:paddingStart="16dp"
+                android:visibility="gone"
                 android:paddingEnd="16dp" />
 
             <Button

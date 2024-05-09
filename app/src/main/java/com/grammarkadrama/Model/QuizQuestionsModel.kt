@@ -2,11 +2,12 @@ package com.grammarkadrama.Model
 import android.os.Parcelable
 
 class QuizQuestionsModel {
-        private var questionText: String = ""
-        private var options: Map<String, String> = mapOf()
-        private var correctOption: Int = -1
-        private var explanation: String = ""
-        private var hint: String = ""
+    private var questionText: String = ""
+    private var options: Map<String, String> = mapOf()
+    private var correctOption: Int = 0
+    private var userOption: Int = 0 // Add a new property to store the user's selected option
+    private var explanation: String = ""
+    private var hint: String = ""
 
         fun getQuestionText(): String {
             return questionText
@@ -33,11 +34,11 @@ class QuizQuestionsModel {
         }
 
         fun getUserOption(): Int {
-            return correctOption
+            return userOption // Return the user's selected option instead of correctOption
         }
 
-        fun setUserOption(correctOption: Int) {
-            this.correctOption = correctOption
+        fun setUserOption(userOption: Int) {
+            this.userOption = userOption // Set the user's selected option
         }
 
         fun getExplanation(): String {

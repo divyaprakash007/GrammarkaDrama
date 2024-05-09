@@ -15,10 +15,11 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.grammarkadrama.R
 
 class MainActivity : AppCompatActivity() {
-
+    // TODO: rearrange the views with context menu (Setting, App Update, share app link)
     private lateinit var listViewItems: ListView
     private lateinit var textViewMessage: TextView
     private lateinit var appUpdateManager: com.google.android.play.core.appupdate.AppUpdateManager
+//    val shareAppTV: TextView = findViewById(R.id.shareAppTV)
 
     private val items = arrayOf(
         "Grammar",
@@ -124,6 +125,19 @@ class MainActivity : AppCompatActivity() {
         if (listViewItems.selectedItem == null) {
             textViewMessage.visibility = View.VISIBLE
         }
+
+//        shareAppTV.setOnClickListener {
+//            // Get the Play Store URL of your app
+//            val appUrl = "https://play.google.com/store/apps/details?id=com.grammarkadrama"
+//
+//            // Create an intent to share this URL
+//            val intent = Intent(Intent.ACTION_SEND)
+//            intent.type = "text/plain"
+//            intent.putExtra(Intent.EXTRA_TEXT, appUrl)
+//
+//            // Start an activity with this intent and show the chooser dialog
+//            startActivity(Intent.createChooser(intent, "Share via"))
+//        }
     }
 
     private fun checkForAppUpdate() {
@@ -181,8 +195,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_CODE_APP_UPDATE = 1000
     }
-
-
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {

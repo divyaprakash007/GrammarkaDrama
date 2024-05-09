@@ -14,3 +14,5 @@ class LoginActivity : AppCompatActivity() {
 
     }
 }
+
+// TODO: Activate Gmail login

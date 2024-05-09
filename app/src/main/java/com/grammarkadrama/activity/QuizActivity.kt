@@ -185,61 +185,41 @@ class QuizActivity : AppCompatActivity() {
 
 
     private fun updateView(currentQuestionIndex: Int) {
-        val optionsMap = Variables.questionsList.get(currentQuestionIndex).getOptions("A") // Get the options map for option "A"
+        val optionsMap = Variables.questionsList[currentQuestionIndex].getOptions("A") // Get the options map for the current question
 
-        Log.d("TAG", "Option Value: ${optionsMap.get("B")}")
-        questionNumberTV.text =
-            "Question Number ${currentQuestionIndex + 1} / ${Variables.questionsList.size}"
-        questionTV.text =
-           Variables.questionsList[currentQuestionIndex].getQuestionText()
+        questionNumberTV.text = "Question Number ${currentQuestionIndex + 1} / ${Variables.questionsList.size}"
+        questionTV.text = Variables.questionsList[currentQuestionIndex].getQuestionText()
 
-        option1RB.text =
-            optionsMap.get("A")
-        option2RB.text =
-            optionsMap.get("B")
-        option3RB.text =
-            optionsMap.get("C")
-        option4RB.text =
-            optionsMap.get("D")
+        option1RB.text = optionsMap["A"]
+        option2RB.text = optionsMap["B"]
+        option3RB.text = optionsMap["C"]
+        option4RB.text = optionsMap["D"]
 
-        optionsRG.clearCheck()
+        optionsRG.setOnCheckedChangeListener(null) // Clear any previous listeners
 
         // Check if an option is selected for the current question
         val selectedOption = Variables.questionsList[currentQuestionIndex].getUserOption()
-
+        Log.d("TAG", "updateView: selected Option: ${selectedOption}")
         // Iterate over the radio buttons in the RadioGroup
-        for (i in 0 until optionsRG.childCount) { // Start from index 0
+        for (i in 0 until optionsRG.childCount) {
             val radioButton = optionsRG.getChildAt(i) as? RadioButton
-            if (radioButton != null) {
-                // Check if the option is selected
-                radioButton.isChecked = i + 1 == selectedOption // Adjust for 1-indexing
-            }
+            radioButton?.isChecked = (i + 1) == selectedOption // Check if this option matches the selected option for the current question
         }
-        optionsRG.setOnCheckedChangeListener(null) // Clear any previous listeners
+
         optionsRG.setOnCheckedChangeListener { group, checkedId ->
             // Get the checked RadioButton's ID
             val checkedRadioButtonId = group.checkedRadioButtonId
 
             // Handle the selection of RadioButton
             when (checkedRadioButtonId) {
-                R.id.option1RB -> {
-                    Variables.questionsList[currentQuestionIndex].setUserOption(1)
-                }
-
-                R.id.option2RB -> {
-                    Variables.questionsList[currentQuestionIndex].setUserOption(2)
-                }
-
-                R.id.option3RB -> {
-                    Variables.questionsList[currentQuestionIndex].setUserOption(3)
-                }
-
-                R.id.option4RB -> {
-                    Variables.questionsList[currentQuestionIndex].setUserOption(4)
-                }
+                R.id.option1RB -> Variables.questionsList[currentQuestionIndex].setUserOption(1)
+                R.id.option2RB -> Variables.questionsList[currentQuestionIndex].setUserOption(2)
+                R.id.option3RB -> Variables.questionsList[currentQuestionIndex].setUserOption(3)
+                R.id.option4RB -> Variables.questionsList[currentQuestionIndex].setUserOption(4)
             }
         }
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()
