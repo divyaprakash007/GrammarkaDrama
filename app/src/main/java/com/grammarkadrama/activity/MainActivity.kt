@@ -1,204 +1,162 @@
 package com.grammarkadrama.activity
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.PopupMenu
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.grammarkadrama.R
 
 class MainActivity : AppCompatActivity() {
     // TODO: rearrange the views with context menu (Setting, App Update, share app link)
-    private lateinit var listViewItems: ListView
-    private lateinit var textViewMessage: TextView
-    private lateinit var appUpdateManager: com.google.android.play.core.appupdate.AppUpdateManager
-//    val shareAppTV: TextView = findViewById(R.id.shareAppTV)
 
-    private val items = arrayOf(
-        "Grammar",
-        "Tenses",
-        "Articles",
-        "Preposition",
-        "Direct and Indirect Speech",
-        "Voice",
-        "Synonyms",
-        "Antonyms",
-        "One Word Substitution",
-        "Idioms and Phrases",
-        "Spelling Check",
-        "Sentence Completion",
-        "Selecting Words",
-        "Completing Statements",
-        "Common Error Detection",
-        "Sentence Improvement",
-        "Sentence Correction",
-        "Sentence Formation",
-        "Ordering of Words",
-        "Ordering of Sentences",
-        "Verbal Analogies"
-    )
+    private lateinit var startQuizLL: LinearLayout
+    private lateinit var studyMaterialLL: LinearLayout
+    private lateinit var premiumLL: LinearLayout
+    private lateinit var wordOfTheDayLL: LinearLayout
+    private lateinit var profileLL: LinearLayout
+    private lateinit var toolbar: Toolbar
+ //    val shareAppTV: TextView = findViewById(R.id.shareAppTV)
 
-    // Key-value pairs for mapping position to Firebase database name
-    private val keyValuePairs = mapOf(
-        1 to "grammar",
-        2 to "tense",
-        3 to "articles",
-        4 to "preposition",
-        5 to "directindirect",
-        6 to "voice",
-        7 to "synonyms",
-        8 to "antonyms",
-        9 to "oneword",
-        10 to "idiomphrases",
-        11 to "spellingcheck",
-        12 to "sentencecomplete",
-        13 to "selectingword",
-        14 to "completingstatements",
-        15 to "commonerror",
-        16 to "sentenceimprovement",
-        17 to "sentencecorrection",
-        18 to "sentenceformation",
-        19 to "orderofwords",
-        20 to "orderofsentence",
-        21 to "verbalanalogies"
-    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize the app update manager
-        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
-        val aboutUsTV: TextView = findViewById(R.id.aboutUsTV)
-        val policyTV: TextView = findViewById(R.id.policyTV)
+        initializeAllVariables()
 
-        // Check for app update availability
-        checkForAppUpdate()
+        setSupportActionBar(toolbar)
 
-        aboutUsTV.setOnClickListener {
-            val intent = Intent(this, WebViewActivity::class.java)
-            intent.putExtra("buttonClicked", "aboutUsTV")
+        startQuizLL.setOnClickListener {
+            // Create an intent to StartQuizActivity
+            val intent = Intent(this, StartQuizActivity::class.java)
             startActivity(intent)
         }
 
-        policyTV.setOnClickListener {
-            val intent = Intent(this, WebViewActivity::class.java)
-            intent.putExtra("buttonClicked", "policyTV")
+        studyMaterialLL.setOnClickListener {
+            // Create an intent to StartQuizActivity
+            val intent = Intent(this, StudyMaterialActivity::class.java)
             startActivity(intent)
         }
 
-        listViewItems = findViewById(R.id.listViewItems)
-        textViewMessage = findViewById(R.id.textViewMessage)
+        premiumLL.setOnClickListener {
+            // Create an intent to StartQuizActivity
+            val intent = Intent(this, GovtPremiumActivity::class.java)
+            startActivity(intent)
+        }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, items)
-        listViewItems.adapter = adapter
+        wordOfTheDayLL.setOnClickListener {
+            // Create an intent to StartQuizActivity
+            val intent = Intent(this, WordOfTheDayActivity::class.java)
+            startActivity(intent)
+        }
 
-        listViewItems.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
-                // Get the selected item value
-                val selectedItem = items[position]
+        profileLL.setOnClickListener {
+            // Create an intent to StartQuizActivity
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
 
-                // Get the corresponding Firebase database name
-                val value = keyValuePairs[position + 1] // Adjust position
+        }
 
-                // Check if the value exists in the map
-                if (value != null) {
-                    // Start the QuizActivity and pass the selected item value
-                    val intent = Intent(this, QuizSelectionActivity::class.java)
-                    intent.putExtra("selectedItem", value)
-                    startActivity(intent)
-                } else {
-                    // Handle the case when the value does not exist in the map
-                    // (This should not occur if the map is correctly initialized)
-                    // Log.e(TAG, "No value found for position: $position")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_options -> {
+                val view = findViewById<View>(item.itemId)
+                showPopupMenu(view)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.inflate(R.menu.context_menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.check_update -> {
+//                    Toast.makeText(this, "Check Update clicked", Toast.LENGTH_SHORT).show()
+                    val appPackageName = packageName
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+                    } catch (e: android.content.ActivityNotFoundException) {
+                        // If Play Store app is not installed, open the Play Store website
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+                    }
+                    true
                 }
-            }
 
-        // Show the message if no item is selected
-        if (listViewItems.selectedItem == null) {
-            textViewMessage.visibility = View.VISIBLE
-        }
+                R.id.rate_app -> {
+//                    Toast.makeText(this, "Share App clicked", Toast.LENGTH_SHORT).show()
+                    // Create an intent to open the Play Store with your app's page
+                    val appPackageName = packageName
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+                    } catch (e: android.content.ActivityNotFoundException) {
+                        // If Play Store app is not installed, open the Play Store website
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+                    }
+                    true
+                }
 
-//        shareAppTV.setOnClickListener {
-//            // Get the Play Store URL of your app
-//            val appUrl = "https://play.google.com/store/apps/details?id=com.grammarkadrama"
-//
-//            // Create an intent to share this URL
-//            val intent = Intent(Intent.ACTION_SEND)
-//            intent.type = "text/plain"
-//            intent.putExtra(Intent.EXTRA_TEXT, appUrl)
-//
-//            // Start an activity with this intent and show the chooser dialog
-//            startActivity(Intent.createChooser(intent, "Share via"))
-//        }
-    }
+                R.id.share_app -> {
+//                    Toast.makeText(this, "Rate App clicked", Toast.LENGTH_SHORT).show()
+//                  Get the Play Store URL of your app
+                    val appUrl = "https://play.google.com/store/apps/details?id=com.grammarkadrama"
 
-    private fun checkForAppUpdate() {
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
-            ) {
-                // An update is available, show the update dialog
-                showUpdateDialog()
-            }
-        }
-    }
+                    // Create an intent to share this URL
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "text/plain"
+                    intent.putExtra(Intent.EXTRA_TEXT, appUrl)
 
-    private fun showUpdateDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Update Available")
-            .setMessage("A new version of the app is available. Update now?")
-            .setPositiveButton("Update") { _, _ ->
-                startAppUpdate()
-            }
-            .setNegativeButton("Not Now") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setCancelable(false)
-            .show()
-    }
+                    // Start an activity with this intent and show the chooser dialog
+                    startActivity(Intent.createChooser(intent, "Share via"))
+                    true
+                }
+                R.id.about_us -> {
+//                    Toast.makeText(this, "Rate App clicked", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra("buttonClicked", "aboutUsTV")
+                    startActivity(intent)
+                    true
+                }
+                R.id.privacy_policy -> {
+//                    Toast.makeText(this, "Rate App clicked", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra("buttonClicked", "policyTV")
+                     startActivity(intent)
+                    true
+                }
 
-    private fun startAppUpdate() {
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                // Start a flexible update
-                appUpdateManager.startUpdateFlowForResult(
-                    appUpdateInfo,
-                    AppUpdateType.FLEXIBLE,
-                    this,
-                    REQUEST_CODE_APP_UPDATE
-                )
+                else -> false
             }
         }
+        popupMenu.show()
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_APP_UPDATE) {
-            if (resultCode != RESULT_OK) {
-                // Update failed or was canceled by the user
-                // Retry or handle accordingly
-            }
-        }
-    }
 
-    companion object {
-        private const val REQUEST_CODE_APP_UPDATE = 1000
-    }
+    fun initializeAllVariables() {
+        startQuizLL = findViewById(R.id.startQuizLL)
+        studyMaterialLL = findViewById(R.id.studyMaterialLL)
+        premiumLL = findViewById(R.id.premiumLL)
+        wordOfTheDayLL = findViewById(R.id.wordOfTheDayLL)
+        profileLL = findViewById(R.id.profileLL)
+        toolbar = findViewById<Toolbar>(R.id.toolbar)
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        // Disable back button press (Do nothing)
     }
 }

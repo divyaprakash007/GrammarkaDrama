@@ -14,6 +14,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/blue_med"
         app:title="Welcome "
+        android:titleTextColor="@color/white"
+        android:subtitleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

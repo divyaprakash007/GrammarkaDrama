@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/check_update"
+        android:title="Check Update"/>
+    <item
+        android:id="@+id/share_app"
+        android:title="Share App"/>
+    <item
+        android:enabled="true"
+        android:id="@+id/rate_app"
+        android:title="Rate App"/>
+    <item
+        android:id="@+id/about_us"
+        android:title="About Us"/>
+    <item
+        android:id="@+id/privacy_policy"
+        android:title="Privacy Policy"/>
+</menu>
