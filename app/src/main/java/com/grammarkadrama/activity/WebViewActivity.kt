@@ -13,7 +13,9 @@ class WebViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_web_view)
 
         val webView: WebView = findViewById(R.id.webView)
-
+        webView.settings.javaScriptEnabled = true
+        webView.settings.domStorageEnabled = true
+        webView.settings.loadsImagesAutomatically = true
         // Retrieve the intent and check which button was clicked
         val intent = intent
         val buttonClicked = intent.getStringExtra("buttonClicked")
@@ -24,5 +26,6 @@ class WebViewActivity : AppCompatActivity() {
         } else if (buttonClicked == "policyTV") {
             webView.loadUrl("file:///android_asset/privacy_policy.html")
         }
+
     }
 }

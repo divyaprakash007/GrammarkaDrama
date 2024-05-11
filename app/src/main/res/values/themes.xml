@@ -13,7 +13,7 @@
     </style>
 
     <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_image</item>
+        <item name="android:windowBackground">@mipmap/ic_launcher</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowSplashScreenAnimationDuration" tools:ignore="NewApi">1000</item>
     </style>

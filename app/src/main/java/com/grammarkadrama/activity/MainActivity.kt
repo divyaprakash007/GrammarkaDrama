@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         wordOfTheDayLL.setOnClickListener {
-            Toast.makeText(this, "Section is Under Development", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Section is Under Development", Toast.LENGTH_LONG).show()
             // Create an intent to StartQuizActivity
-//            val intent = Intent(this, WordOfTheDayActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(this, WordOfTheDayActivity::class.java)
+            startActivity(intent)
         }
 
         profileLL.setOnClickListener {

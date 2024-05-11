@@ -42,9 +42,9 @@ class ProfileActivity : AppCompatActivity() {
         setOnClickListeners()
 
         // Retrieve the played quiz number from SharedPreferences
-        val sharedPrefs = SharedPrefs.getInstance(this)
-        val playedQuizNumber = sharedPrefs.getPlayedQuizNumber()
-        playedQuizTextView.setText("Total Played Quizzes : $playedQuizNumber")
+//        val sharedPrefs = SharedPrefs.getInstance(this)
+//        val playedQuizNumber = sharedPrefs.getPlayedQuizNumber()
+        playedQuizTextView.setText("Total Played Quizzes : #N/A")
 
     }
 

@@ -12,13 +12,13 @@ class SharedPrefs private constructor(context: Context) {
         editor = sharedPreferences.edit()
     }
 
-    fun setPlayedQuizNumber(quizNumber: Int) {
-        editor.putInt(PLAYED_QUIZ_NUMBER, quizNumber)
+    fun setWordOfDayNumber(quizNumber: Int) {
+        editor.putInt(WORD_OF_DAY, quizNumber)
         editor.apply()
     }
 
-    fun getPlayedQuizNumber(): Int {
-        return sharedPreferences.getInt(PLAYED_QUIZ_NUMBER, 0)
+    fun getWordOfDayNumber(): Int {
+        return sharedPreferences.getInt(WORD_OF_DAY, 0)
     }
 
     fun setUserLoggedIn(isLoggedIn: Boolean) {
@@ -32,7 +32,7 @@ class SharedPrefs private constructor(context: Context) {
 
     companion object {
         private var instance: SharedPrefs? = null
-        private const val PLAYED_QUIZ_NUMBER = "played_quiz_number"
+        private const val WORD_OF_DAY = "word_of_day_number"
         private const val USER_LOGGED_IN = "user_logged_in"
 
         fun getInstance(context: Context): SharedPrefs {

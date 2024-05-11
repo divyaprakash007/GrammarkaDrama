@@ -43,7 +43,7 @@ class QuizActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
-
+        Variables.questionsList.clear()
         // Initialize views
         questionNumberTV = findViewById(R.id.questionNumberTV)
         questionTV = findViewById(R.id.questionTV)
