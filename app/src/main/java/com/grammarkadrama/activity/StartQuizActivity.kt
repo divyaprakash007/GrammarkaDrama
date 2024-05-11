@@ -1,6 +1,10 @@
 package com.grammarkadrama.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -60,118 +64,22 @@ class StartQuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_quiz)
 
+        val listView: ListView = findViewById(R.id.listView)
 
+        // Set up the adapter
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, items)
+        listView.adapter = adapter
 
-        // Register the view for context menu
-        // Set up the toolbar
-//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-//        setSupportActionBar(toolbar)
-        // Initialize the app update manager
-//        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
-//        val aboutUsTV: TextView = findViewById(R.id.aboutUsTV)
-//        val policyTV: TextView = findViewById(R.id.policyTV)
-
-
-
-        // Check for app update availability
-        // checkForAppUpdate()
-
-//
-//        listViewItems = findViewById(R.id.listViewItems)
-//        textViewMessage = findViewById(R.id.textViewMessage)
-
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, items)
-//        listViewItems.adapter = adapter
-//
-//        listViewItems.onItemClickListener =
-//            AdapterView.OnItemClickListener { parent, view, position, id ->
-//                // Get the selected item value
-//                val selectedItem = items[position]
-//
-//                // Get the corresponding Firebase database name
-//                val value = keyValuePairs[position + 1] // Adjust position
-//
-//                // Check if the value exists in the map
-//                if (value != null) {
-//                    // Start the QuizActivity and pass the selected item value
-//                    val intent = Intent(this, QuizSelectionActivity::class.java)
-//                    intent.putExtra("selectedItem", value)
-//                    startActivity(intent)
-//                } else {
-//                    // Handle the case when the value does not exist in the map
-//                    // (This should not occur if the map is correctly initialized)
-//                    // Log.e(TAG, "No value found for position: $position")
-//                }
-//            }
-//
-//        // Show the message if no item is selected
-//        if (listViewItems.selectedItem == null) {
-//            textViewMessage.visibility = View.VISIBLE
-//        }
-//
-////
-//    }
-//
-//    private fun checkForAppUpdate() {
-//        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-//        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-//            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-//                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
-//            ) {
-//                // An update is available, show the update dialog
-//                showUpdateDialog()
-//            }
-//        }
-//    }
-//
-//    private fun showUpdateDialog() {
-//        AlertDialog.Builder(this)
-//            .setTitle("Update Available")
-//            .setMessage("A new version of the app is available. Update now?")
-//            .setPositiveButton("Update") { _, _ ->
-//                startAppUpdate()
-//            }
-//            .setNegativeButton("Not Now") { dialog, _ ->
-//                dialog.dismiss()
-//            }
-//            .setCancelable(false)
-//            .show()
-//    }
-//
-//    private fun startAppUpdate() {
-//        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-//        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-//            if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-//                // Start a flexible update
-//                appUpdateManager.startUpdateFlowForResult(
-//                    appUpdateInfo,
-//                    AppUpdateType.FLEXIBLE,
-//                    this,
-//                    REQUEST_CODE_APP_UPDATE
-//                )
-//            }
-//        }
-//    }
-//
-//    @Deprecated("Deprecated in Java")
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == REQUEST_CODE_APP_UPDATE) {
-//            if (resultCode != RESULT_OK) {
-//                // Update failed or was canceled by the user
-//                // Retry or handle accordingly
-//            }
-//        }
-//    }
-//
-//    companion object {
-//        private const val REQUEST_CODE_APP_UPDATE = 1000
-//    }
-//
-//    @Deprecated("Deprecated in Java")
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//        // Disable back button press (Do nothing)
-//    }
+        // Set item click listener
+        listView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                val selectedItem = items[position]
+                val correspondingValue = keyValuePairs[position + 1] // Adjusting index
+                if (correspondingValue != null) {
+                    val intent = Intent(this@StartQuizActivity, QuizSelectionActivity::class.java)
+                    intent.putExtra("selectedItem", correspondingValue)
+                    startActivity(intent)
+                }
+            }
     }
 }

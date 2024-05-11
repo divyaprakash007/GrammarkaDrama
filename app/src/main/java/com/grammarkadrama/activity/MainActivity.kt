@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
  //    val shareAppTV: TextView = findViewById(R.id.shareAppTV)
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,21 +42,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         studyMaterialLL.setOnClickListener {
+            Toast.makeText(this, "Section is Under Development", Toast.LENGTH_LONG).show()
             // Create an intent to StartQuizActivity
-            val intent = Intent(this, StudyMaterialActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, StudyMaterialActivity::class.java)
+//            startActivity(intent)
         }
 
         premiumLL.setOnClickListener {
+            Toast.makeText(this, "Section is Under Development", Toast.LENGTH_LONG).show()
             // Create an intent to StartQuizActivity
-            val intent = Intent(this, GovtPremiumActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, GovtPremiumActivity::class.java)
+//            startActivity(intent)
         }
 
         wordOfTheDayLL.setOnClickListener {
+            Toast.makeText(this, "Section is Under Development", Toast.LENGTH_LONG).show()
             // Create an intent to StartQuizActivity
-            val intent = Intent(this, WordOfTheDayActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, WordOfTheDayActivity::class.java)
+//            startActivity(intent)
         }
 
         profileLL.setOnClickListener {

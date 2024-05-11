@@ -35,7 +35,7 @@ class ResultActivity : AppCompatActivity() {
 
         val motivationalTV: TextView = findViewById(R.id.motivationalTV)
         val quizScoreTV: TextView = findViewById(R.id.quizScoreTV)
-        val sharelinkTV: TextView = findViewById(R.id.sharelinkTV)
+        val sharelinkBtn: Button = findViewById(R.id.sharelinkBtn)
 
         // Generate a random index
         val randomIndex = (0 until motivationalLines.size).random()
@@ -51,7 +51,7 @@ class ResultActivity : AppCompatActivity() {
 
         quizScoreTV.setText("Quiz Score is : ${scoreCounter}")
 
-        sharelinkTV.setOnClickListener {
+        sharelinkBtn.setOnClickListener {
             // Get the Play Store URL of your app
             val appUrl = "https://play.google.com/store/apps/details?id=com.grammarkadrama"
 
@@ -72,5 +72,12 @@ class ResultActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

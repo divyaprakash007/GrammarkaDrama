@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@color/textc"
     android:orientation="vertical"
     tools:context=".activity.QuizSelectionActivity">
 
@@ -18,6 +19,7 @@
         android:id="@+id/listViewQuizzes"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/white"
         android:layout_weight="1" />
 
     <!-- Progress Bar -->
