@@ -53,12 +53,14 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, WebViewActivity::class.java)
             intent.putExtra("buttonClicked", "policyTV")
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, 0)
         }
 
         aboutUsTextView.setOnClickListener {
             val intent = Intent(this, WebViewActivity::class.java)
             intent.putExtra("buttonClicked", "aboutUsTV")
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, 0)
         }
 
         shareImageView.setOnClickListener {

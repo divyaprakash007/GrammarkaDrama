@@ -13,6 +13,9 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.grammarkadrama.R
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var wordOfTheDayLL: LinearLayout
     private lateinit var profileLL: LinearLayout
     private lateinit var toolbar: Toolbar
+    private lateinit var adView: AdView
+
  //    val shareAppTV: TextView = findViewById(R.id.shareAppTV)
 
 
@@ -32,6 +37,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initializeAllVariables()
+        MobileAds.initialize(this) {}
+
+        // Create an ad request.
+        val adRequest = AdRequest.Builder().build()
+
+        // Start loading the ad in the background.
+        adView.loadAd(adRequest)
 
         setSupportActionBar(toolbar)
 
@@ -39,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             // Create an intent to StartQuizActivity
             val intent = Intent(this, StartQuizActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, 0)
         }
 
         studyMaterialLL.setOnClickListener {
@@ -46,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             // Create an intent to StartQuizActivity
 //            val intent = Intent(this, StudyMaterialActivity::class.java)
 //            startActivity(intent)
+//            overridePendingTransition(R.anim.fade_in, 0)
         }
 
         premiumLL.setOnClickListener {
@@ -53,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             // Create an intent to StartQuizActivity
 //            val intent = Intent(this, GovtPremiumActivity::class.java)
 //            startActivity(intent)
+//            overridePendingTransition(R.anim.fade_in, 0)
         }
 
         wordOfTheDayLL.setOnClickListener {
@@ -60,12 +75,14 @@ class MainActivity : AppCompatActivity() {
             // Create an intent to StartQuizActivity
             val intent = Intent(this, WordOfTheDayActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, 0)
         }
 
         profileLL.setOnClickListener {
             // Create an intent to StartQuizActivity
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, 0)
         }
 
         }
@@ -135,13 +152,15 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, WebViewActivity::class.java)
                     intent.putExtra("buttonClicked", "aboutUsTV")
                     startActivity(intent)
+                    overridePendingTransition(R.anim.fade_in, 0)
                     true
                 }
                 R.id.privacy_policy -> {
 //                    Toast.makeText(this, "Rate App clicked", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, WebViewActivity::class.java)
                     intent.putExtra("buttonClicked", "policyTV")
-                     startActivity(intent)
+                    startActivity(intent)
+                    overridePendingTransition(R.anim.fade_in, 0)
                     true
                 }
 

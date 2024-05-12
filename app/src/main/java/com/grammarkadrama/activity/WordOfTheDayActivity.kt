@@ -1,5 +1,6 @@
 package com.grammarkadrama.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
@@ -37,6 +38,7 @@ class WordOfTheDayActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var wordTV: TextView
     private lateinit var ttsIV: ImageView
     private lateinit var textToSpeak: String
+    private lateinit var shareIV2: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +56,7 @@ class WordOfTheDayActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         synonymTV = findViewById(R.id.synonymTV)
         wordTV = findViewById(R.id.wordTV)
         ttsIV = findViewById(R.id.ttsIV)
+        shareIV2 = findViewById(R.id.shareIV2)
 
         databaseRef = FirebaseDatabase.getInstance().reference
         fetchDataFromFirebase()
@@ -62,9 +65,21 @@ class WordOfTheDayActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             textToSpeak = wordTV.text.toString()
             textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
         }
+
+        shareIV2.setOnClickListener {
+
+            // Get the Play Store URL of your app
+            val appUrl = "https://play.google.com/store/apps/details?id=com.grammarkadrama"
+
+            // Create an intent to share this URL
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, appUrl)
+            // Start an activity with this intent and show the chooser dialog
+            startActivity(Intent.createChooser(intent, "Share via"))
+
+        }
     }
-
-
 
     private fun showProgressDialog() {
         val dialogView = layoutInflater.inflate(R.layout.custom_progress_dialog, null)

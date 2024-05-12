@@ -79,6 +79,7 @@ class StartQuizActivity : AppCompatActivity() {
                     val intent = Intent(this@StartQuizActivity, QuizSelectionActivity::class.java)
                     intent.putExtra("selectedItem", correspondingValue)
                     startActivity(intent)
+                    overridePendingTransition(R.anim.fade_in, 0)
                 }
             }
     }

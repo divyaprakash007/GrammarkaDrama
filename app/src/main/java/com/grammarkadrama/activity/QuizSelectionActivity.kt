@@ -81,6 +81,7 @@ class QuizSelectionActivity : AppCompatActivity() {
         intent.putExtra("selectedItem", selectedItem)
         intent.putExtra("quizId", quizId)
         startActivity(intent)
+        overridePendingTransition(R.anim.fade_in, 0)
     }
 
     private fun showProgressBar() {

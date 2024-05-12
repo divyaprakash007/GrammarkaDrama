@@ -11,6 +11,14 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!-- Google Ad Details -->
+
+    <string name="test_app_id">ca-app-pub-2347260283319749~8448239491</string>
+    <string name="test_add_unit_id">ca-app-pub-2347260283319749/1726918471</string>
+
+    <string name="app_id">ca-app-pub-2347260283319749~8448239491</string>
+    <string name="main_activity_unit_id">ca-app-pub-2347260283319749/1726918471</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

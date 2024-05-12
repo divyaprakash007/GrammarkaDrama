@@ -146,6 +146,7 @@ class QuizActivity : AppCompatActivity() {
             if (nextButton.text.equals("Submit")) {
                 val intent = Intent(this, ResultActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, 0)
             } else {
                 currentQuestionIndex += 1
                 previousButton.isEnabled = true

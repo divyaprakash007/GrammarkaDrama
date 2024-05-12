@@ -64,14 +64,6 @@ class ResultActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Share via"))
         }
 
-//        restartButton.setOnClickListener {
-//            // Create Intent to navigate to MainActivity
-//            val intent = Intent(this, MainActivity::class.java)
-//
-//            // Start the activity using the intent
-//            startActivity(intent)
-//        }
-
     }
 
     override fun onBackPressed() {
@@ -79,5 +71,6 @@ class ResultActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+        overridePendingTransition(R.anim.fade_in, 0)
     }
 }
